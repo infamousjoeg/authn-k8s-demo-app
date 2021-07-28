@@ -1,53 +1,49 @@
-# authn-k8s-demo-app
+# authn-k8s-demo-app <!-- omit in toc -->
 
-A Golang-based demonstration application that just repeats back values that are given to it by various means.
+A simple Golang-based application that echos environment variables given to it on a continuous loop. 
 
-## Environment Variable
+This is an updated version of `go-app` developed by Evan Litwak (@daswak).
 
-The environment variable binary will read two (2) environment variable values and report them to STDOUT:
+- [Environment Requirements](#environment-requirements)
+- [How does it work?](#how-does-it-work)
+- [Compiling](#compiling)
+- [License](#license)
 
-* DB_USERNAME
-* DB_PASSWORD
+## Environment Requirements
 
-### Compile Binaries
+`CONJUR_USER_OBJECT`
+The variable path to the username as it exists in Conjur.
 
-To compile the application into binaries for Linux, MacOS (AMD & ARM) and Windows, run the following command from the root of this repository:
+`CONJUR_PASS_OBJECT`
+The variable path to the password as it exists in Conjur.
 
-```shell
-make compile-env
-```
+`CONJUR_APPLIANCE`
+The Base URL of the Conjur API service.
 
-All compiled binaries will be output into the [bin/]() directory.
+`CONJUR_ACCOUNT`
+The org account established during initial deployment of Conjur.
 
-### Testing
+## How does it work?
 
-Ensure [Summon](https://cyberark.github.io/summon) and the [Summon Conjur provider](https://github.com/cyberark/summon-conjur) is installed.
+_The application will first look for relevant Kubernetes Secrets to use, by default._ If none are found, it is assumed that the CyberArk Conjur authn-k8s will be used for secure secrets retrieval.
 
-#### Without Comiling Binary
+__NOTE:__ _Italics denote "Under Development"._
 
-From the root directory of this repository, execute the following command:
+## Compiling
 
-```shell
-summon make run-env
-```
-
-#### After Compiling Binary
-
-From the root directory of this repository, execute the following command while setting `OS` and `ARCH` to your local environment values:
+To build a binary for your current environment:
 
 ```shell
-OS=darwin
-ARCH=amd64
-summon ./bin/authn-k8s-env-$OS-$ARCH
+make build
 ```
 
-## Conjur API
+To build a binary for every OS and ARCH supported:
 
-Under development
+```shell
+make compile
+```
 
-## Kubernetes Secrets
-
-Under development
+All compiled binaries will be placed in the [bin/]() directory of this repository.
 
 ## License
 
